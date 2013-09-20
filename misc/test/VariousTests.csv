@@ -1,0 +1,12 @@
+"Name/NameGiven","Name/NameSurname","Phone/Home","Phone/Work","PostalAddressCode/Home","Fax/Other","PostalAddressLine1/Home","Email/SoundRingtone","PostalAddressCity/Home","PostalAddressCountry/Home","Email/Work","Phone/PhoneMobile","Note/Other","Website/SoundRingtone"
+
+,,,,,,,,,,,,,
+"",,"",,"",,"",,"",,"",,"",
+"","","","","","","","","","","","","",""
+
+"Eintrag zu kurz","Ackermann1"
+"Eintrag zu lang","Ackermann2","+4989123456","+498912345678","81234",,"Bahnhofstraße 1","mail@email.de","München","DE","mail@firma.com","+49170123456","Das sind Notizen","http://www.homepage.de","Irgendwas"
+"Komma","Ackermann3","+4989123456","+498912345678","81234",,"Bahnhofstraße 1","mail@email.de","München","DE","mail@firma.com","+49170123456","Wenn Kommata im Feld vorkommen, könnte das Schwierigkeiten bereiten","http://www.homepage.de"
+"Zeilenumbruch","Ackermann3","+4989123456","+498912345678","81234",,"Bahnhofstraße 1","mail@email.de","München","DE","mail@firma.com","+49170123456","Wenn Zeilenumbrüche
+im Feld vorkommen, könnte das Schwierigkeiten bereiten","http://www.firma.de"
+

@@ -1,0 +1,37 @@
+Import-Tests:
+
+- Import contacts from CSV with empty local contacts database.
+
+- Import contacts from vCard with empty local contacts database.
+
+- Import empty CSV file.
+
+- Import empty vCard file.
+
+- Import CSV file with all merge policies
+	- Keep existing
+	- Overwrite
+	- Merge
+	- Add new
+
+- Import vCard file with all merge policies
+	- Keep existing
+	- Overwrite
+	- Merge
+	- Add new
+
+CSV-Tests:
+
+- Leere Datei
+- Nur Header
+- Leere Zeile
+- Zeile ohne Inhalt
+- Zeile zu kurz
+- Zeile zu lang
+- Komma im Feld
+- Zeilenumbruch im Feld
+- Vollständiger Kontakt
+
+Export-Tests:
+
+- Export all contacts to CSV
