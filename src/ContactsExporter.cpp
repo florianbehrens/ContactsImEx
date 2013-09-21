@@ -1,4 +1,21 @@
-// (c) 2013 Florian Behrens.
+/*
+ * (c) Copyright Florian Behrens 2013.
+ *
+ * This file is part of ContactsImEx.
+ *
+ * ContactsImEx is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * ContactsImEx is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with ContactsImEx.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 #include "ContactsExporter.h"
 
@@ -90,7 +107,6 @@ void ContactsExporter::exportContacts(const QString &filename)
 		ContactListFilters contactListFilters;
 		contactListFilters.setLimit(INT_MAX);
 		QList<Contact> contactList = mContactService.contacts(contactListFilters);
-		qDebug() << contactList.size() << "contacts found";
 
 		// Convert list of contacts to list of contact ids
 		for (QList<Contact>::const_iterator it = contactList.begin(); it != contactList.end(); ++it)
@@ -99,8 +115,6 @@ void ContactsExporter::exportContacts(const QString &filename)
 		// Convert mContacts to list of contact ids
 		for (QVariantList::const_iterator it = mContacts.begin(); it != mContacts.end(); ++it)
 			contactIds << (*it).toInt();
-
-		qDebug() << contactIds.size() << "contacts given";
 	}
 
 	// Check filename for proper extension
@@ -115,7 +129,7 @@ void ContactsExporter::exportContacts(const QString &filename)
 		std::unique_ptr<SystemProgressDialog, std::delete_later<SystemProgressDialog> > systemProgressDialog(new SystemProgressDialog());
 		systemProgressDialog->setTitle(tr("Exporting contacts..."));
 		systemProgressDialog->setProgress(0);
-		systemProgressDialog->setStatusDetails(QString(tr("%1 contacts exported")).arg(0));
+		systemProgressDialog->setStatusDetails(QString(tr("%1 contact(s) exported")).arg(0));
 		systemProgressDialog->confirmButton()->setLabel(QString());
 		systemProgressDialog->cancelButton()->setLabel(tr("Cancel"));
 		systemProgressDialog->setDismissAutomatically(false);
@@ -138,7 +152,7 @@ void ContactsExporter::exportContacts(const QString &filename)
 
 					// Update progress bar
 					systemProgressDialog->setProgress(pos * 100 / contactIds.size());
-					systemProgressDialog->setStatusDetails(QString(tr("%1 contacts exported")).arg(pos));
+					systemProgressDialog->setStatusDetails(QString(tr("%1 contact(s) exported")).arg(pos));
 					systemProgressDialog->show();
 				}
 			} else if (mFiletype == CSV) {
@@ -156,15 +170,11 @@ void ContactsExporter::exportContacts(const QString &filename)
 					const Contact contact = mContactService.contactDetails(*it);
 					QMap<QString, QString> contactMap;
 
-					qDebug() << "Exporting contact:";
-
 					// Iterate over contacts attributes
 					typedef QList<ContactAttribute> ContactAttributes;
 					ContactAttributes contactAttributes = contact.attributes();
 					for (ContactAttributes::const_iterator it = contactAttributes.constBegin(); it != contactAttributes.constEnd(); ++it) {
 						QString attributeName = QString(mAttributeKinds[it->kind()] + "/" + mAttributeSubKinds[it->subKind()]);
-
-						qDebug().nospace() << attributeName << ": " << it->value();
 
 						// Put attribute in global attribute name set and contact map
 						attributeNames.insert(attributeName);
@@ -175,18 +185,6 @@ void ContactsExporter::exportContacts(const QString &filename)
 					typedef QList<ContactPostalAddress> ContactPostalAddresses;
 					ContactPostalAddresses contactPostalAddresses = contact.postalAddresses();
 					for (ContactPostalAddresses::const_iterator it = contactPostalAddresses.constBegin(); it != contactPostalAddresses.constEnd(); ++it) {
-						qDebug().nospace()
-							<< "City: " << it->city()
-							<< "Country: " << it->country()
-							<< "Label: " << it->label()
-							<< "Line1: " << it->line1()
-							<< "Line2: " << it->line2()
-							<< "Latitude: " << it->latitude()
-							<< "Longitude: " << it->longitude()
-							<< "Postal code: " << it->postalCode()
-							<< "Subkind: " << it->subKind()
-							<< "Region: " << it->region();
-
 						QString attributeName;
 						QString& prefix = postalAddressAttributePrefix;
 						if (!it->line1().isEmpty()) {
@@ -242,7 +240,7 @@ void ContactsExporter::exportContacts(const QString &filename)
 
 					// Update progress bar
 					systemProgressDialog->setProgress(index * 100 / contactIds.size());
-					systemProgressDialog->setStatusDetails(QString(tr("%1 contacts exported")).arg(index));
+					systemProgressDialog->setStatusDetails(QString(tr("%1 contact(s) exported")).arg(index));
 					systemProgressDialog->show();
 				}
 
@@ -261,15 +259,13 @@ void ContactsExporter::exportContacts(const QString &filename)
 				}
 			}
 
-			Utilities::showSystemToast(this, QString(tr("%1 contacts successfully exported.")).arg(contactIds.size()));
+			Utilities::showSystemToast(this, QString(tr("%1 contact(s) successfully exported.")).arg(contactIds.size()));
 		} catch (operation_cancelled&) {}
 
 		systemProgressDialog->cancel();
 	} else
-		Utilities::showSystemToast(this, QString(tr("Could not write contacts to file %1.")).arg(actualFilename));
+		Utilities::showSystemToast(this, QString(tr("Could not write contact(s) to file %1.")).arg(actualFilename));
 }
 
 void ContactsExporter::onContactsSelected(const QList<int> &contactList)
-{
-	qDebug() << contactList.size() << "contacts selected";
-}
+{}

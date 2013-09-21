@@ -1,8 +1,20 @@
 /*
- * ContactsImporter.cpp
+ * (c) Copyright Florian Behrens 2013.
  *
- *  Created on: 29.08.2013
- *      Author: willy
+ * This file is part of ContactsImEx.
+ *
+ * ContactsImEx is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * ContactsImEx is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with ContactsImEx.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "ContactsImporter.h"
@@ -50,7 +62,7 @@ void ContactsImporter::importVcard(QFile &file)
 	std::auto_ptr<SystemProgressDialog> systemProgressDialog(new SystemProgressDialog);
 	systemProgressDialog->setTitle(tr("Importing contacts..."));
 	systemProgressDialog->setProgress(0);
-	systemProgressDialog->setStatusDetails(QString(tr("%1 contacts imported")).arg(0));
+	systemProgressDialog->setStatusDetails(QString(tr("%1 contact(s) imported")).arg(0));
 	systemProgressDialog->confirmButton()->setLabel(QString());
 	systemProgressDialog->cancelButton()->setLabel(tr("Cancel"));
 	systemProgressDialog->setDismissAutomatically(false);
@@ -99,7 +111,7 @@ void ContactsImporter::importVcard(QFile &file)
 
 		// Update progress bar
 		systemProgressDialog->setProgress(file.pos() * 100 / fileSize);
-		systemProgressDialog->setStatusDetails(QString(tr("%1 contacts processed")).arg(i));
+		systemProgressDialog->setStatusDetails(QString(tr("%1 contact(s) processed")).arg(i));
 		systemProgressDialog->show();
 	}
 
@@ -131,7 +143,7 @@ void ContactsImporter::importCsv(QFile &file)
 		std::auto_ptr<SystemProgressDialog> systemProgressDialog(new SystemProgressDialog);
 		systemProgressDialog->setTitle(tr("Importing contacts..."));
 		systemProgressDialog->setProgress(0);
-		systemProgressDialog->setStatusDetails(QString(tr("%1 contacts imported")).arg(0));
+		systemProgressDialog->setStatusDetails(QString(tr("%1 contact(s) imported")).arg(0));
 		systemProgressDialog->confirmButton()->setLabel(QString());
 		systemProgressDialog->cancelButton()->setLabel(tr("Cancel"));
 		systemProgressDialog->setDismissAutomatically(false);
@@ -143,8 +155,6 @@ void ContactsImporter::importCsv(QFile &file)
 		QVector<QString> headerRow;
 		for(boost::tokenizer<boost::escaped_list_separator<char> >::iterator it = tokenizer.begin(); it != tokenizer.end(); ++it)
 			headerRow << QString::fromUtf8(it->c_str());
-
-		qDebug().nospace() << "Header row: " << str.c_str();
 
 		// Read address records, one at a time
 		size_t addressRecordIndex = 0;
@@ -162,8 +172,6 @@ void ContactsImporter::importCsv(QFile &file)
 
 			str = byteArray.constData();
 			tokenizer.assign(str);
-
-			qDebug().nospace() << "Current row: " << str.c_str();
 
 			boost::tokenizer<boost::escaped_list_separator<char> >::iterator it = tokenizer.begin();
 			for(int i = 0; it != tokenizer.end() && i < headerRow.size(); ++it, ++i) {
@@ -188,9 +196,6 @@ void ContactsImporter::importCsv(QFile &file)
 					if (attributeKindName.startsWith(prefix)) {
 						QString key = attributeKindName.mid(prefix.length());
 						postalAddresses[attributeSubKind][key] = value;
-
-						qDebug() << key.toLocal8Bit() << "/" <<
-									attributeSubKindName.toLocal8Bit() << ": " << value.toLocal8Bit();
 					} else {
 						// Lookup attribute kind from attribute kind table.
 						// If none is found, use the default attribute Note/Other.
@@ -203,9 +208,6 @@ void ContactsImporter::importCsv(QFile &file)
 								.setKind(attributeKind)
 								.setSubKind(attributeSubKind)
 								.setValue(value));
-
-						qDebug() << attributeKindName.toLocal8Bit() << "(" << attributeKind << ")/" <<
-									attributeSubKindName.toLocal8Bit() << "(" << attributeSubKind << "): " << value.toLocal8Bit();
 					}
 				}
 			}
@@ -266,7 +268,7 @@ void ContactsImporter::importCsv(QFile &file)
 			// Update progress bar
 			addressRecordIndex += 1;
 			systemProgressDialog->setProgress(file.pos() * 100 / fileSize);
-			systemProgressDialog->setStatusDetails(QString(tr("%1 contacts imported")).arg(addressRecordIndex));
+			systemProgressDialog->setStatusDetails(QString(tr("%1 contact(s) imported")).arg(addressRecordIndex));
 			systemProgressDialog->show();
 		}
 
@@ -295,8 +297,6 @@ ContactsImporter::ImportResult ContactsImporter::importContact(Contact& newConta
 	if (!newContact.isValid())
 		return Invalid;
 
-	qDebug() << "Imported contact: " << newContact.firstName() << newContact.lastName();
-
 	if (mMergePolicy != NoCheck) {
 		// Check whether contact is already available:
 		// First filter by first and last names
@@ -311,8 +311,6 @@ ContactsImporter::ImportResult ContactsImporter::importContact(Contact& newConta
 		for (QList<Contact>::const_iterator it = contactList.begin(); it != contactList.end(); ++it) {
 			existingContact = mContactService.contactDetails(it->id());
 
-			qDebug() << "Found present contact: " << existingContact.firstName() << existingContact.lastName();
-
 			if (existingContact.lastName() == newContact.lastName() &&
 				existingContact.firstName() == newContact.firstName())
 			{
@@ -326,12 +324,8 @@ ContactsImporter::ImportResult ContactsImporter::importContact(Contact& newConta
 
 	if (isExisting) {
 		if (mMergePolicy == KeepExisting) {
-			qDebug() << "Contact is already existing: Ignoring imported contact";
-
 			retval = Ignored;
 		} else if (mMergePolicy == OverwriteExisting) {
-			qDebug() << "Contact is already existing: Overwriting existing contact";
-
 			mContactService.deleteContact(existingContact.id());
 			mContactService.createContact(newContact, false);
 
@@ -339,8 +333,6 @@ ContactsImporter::ImportResult ContactsImporter::importContact(Contact& newConta
 		} else if (mMergePolicy == Merge) {
 			// Create new contact
 			Contact createdContact = mContactService.createContact(newContact, false);
-
-			qDebug() << "Contact is already existing: Merging contacts " << existingContact.id() << ", " << createdContact.id();
 
 			// And merge contacts afterwards
 			QList<ContactId> contactIds;

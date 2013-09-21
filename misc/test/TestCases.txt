@@ -1,24 +1,21 @@
 Import-Tests:
 
 - Import contacts from CSV with empty local contacts database.
-
 - Import contacts from vCard with empty local contacts database.
-
 - Import empty CSV file.
-
 - Import empty vCard file.
-
 - Import CSV file with all merge policies
 	- Keep existing
 	- Overwrite
 	- Merge
 	- Add new
-
 - Import vCard file with all merge policies
 	- Keep existing
 	- Overwrite
 	- Merge
 	- Add new
+- Cancel CSV file import
+- Cancel vCard file import
 
 CSV-Tests:
 

@@ -1,0 +1,21 @@
+BEGIN:VCARD
+VERSION:3.0
+PRODID:-//Research In Motion//RIM App//EN
+UID:077e145c-22ad-11e3-867c-7d27e0bacea4
+ADR;TYPE=HOME:Postfach 1;;Straße 1;Stadt;Region;PLZ;Land
+EMAIL;TYPE=HOME:name@email.de
+EMAIL;TYPE=WORK:name@firma.de
+FN:Vorname Zweitname Nachname Dr.-Ing.
+N:Nachname;Vorname;Zweitname;Dr.-Ing.;
+NOTE:Kommata: \,\,\,\nAnführungszeichen: """\nBackslash: \\\nZeilenumbrüch
+ e:\n\n\n
+ORG:Firma;Abteilung;
+TEL;TYPE=WORK:+4930123456
+TEL;TYPE=CELL:+49170123456
+TEL;TYPE=voice:+49700123456
+TEL;TYPE=HOME:+4989123456
+TITLE:Titel
+URL;TYPE=WORK:www.umlaute-äöüßéèêëï.net
+X-LINKEDIN:LinkedIn
+X-RIM-PIN:1234
+END:VCARD
