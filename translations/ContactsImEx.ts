@@ -42,8 +42,13 @@
     <message>
         <location filename="../src/ContactsImporter.cpp" line="65"/>
         <location filename="../src/ContactsImporter.cpp" line="146"/>
-        <location filename="../src/ContactsImporter.cpp" line="281"/>
-        <source>%1 contacts imported</source>
+        <location filename="../src/ContactsImporter.cpp" line="271"/>
+        <source>%1 contact(s) imported</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ContactsImporter.cpp" line="114"/>
+        <source>%1 contact(s) processed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -53,13 +58,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ContactsImporter.cpp" line="114"/>
-        <source>%1 contacts processed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/ContactsImporter.cpp" line="122"/>
-        <location filename="../src/ContactsImporter.cpp" line="291"/>
+        <location filename="../src/ContactsImporter.cpp" line="281"/>
         <source>%1 contact(s) ignored.
 %2 contact(s) overwritten.
 %3 contact(s) merged.

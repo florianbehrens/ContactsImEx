@@ -26,7 +26,7 @@
 
     <!-- A universally unique application identifier. Must be unique across all BlackBerry 10 applications.
          Using a reverse DNS-style name as the id is recommended. (Eg. com.example.ExampleApplication.) Required. -->
-    <id>com.example.ContactsImEx</id>
+    <id>ContactsImEx</id>
 
     <!-- The name that is displayed in the BlackBerry 10 application installer. 
          May have multiple values for each language. See samples or xsd schema file. Optional. -->
@@ -51,7 +51,7 @@
     <!-- <copyright></copyright> -->
 
     <!--  Name of author which is used for signing. Must match the developer name of your development certificate. -->
-    <author>Private</author>
+    <author>Florian Behrens</author>
     <authorId>gYAAgNeFYDqaie_zCEMP_Y3UbjE</authorId>
     <description>Import/export contacts to/from local files.</description>
     <configuration name="Device-Debug">
