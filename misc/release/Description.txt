@@ -1,0 +1,22 @@
+Import and export contacts in CSV or VCF format.
+
+ContactsImEx is a handy tool that helps you to import and export your contacts data from and to either a CSV (comma separated values) or vCard (*.vcf) format file.
+
+Features:
+- Import contacts from vCard format version 3.0 (including contact photos).
+- Export contacts to vCard format version 3.0 (including contact photos).
+- Import contacts from CSV file with very flexible column configuration.
+- Export full contacts to CSV file (no contact photos).
+
+The CSV format uses comma, double quotes, and backslash as special characters for field separator, quotation, escaping, respectively. Newlines are exported as '\n'. The first line is considered a header record containing the field names.
+
+CSV format example records are:
+Field 1,Field 2,Field 3
+Field 1,"Field 2, with comma",Field 3
+Field 1,Field 2 with \"quotes\",Field 3
+Field 1,Field 2 with embedded \n new line,Field 3
+Field 1,Field 2 with embedded \\,Field 3
+
+For the field names the so-called attribute kind and subkind names joined with a slash (/) from the Blackberry OS Contacts API are used. Typical field names are: Name/NameGiven, Name/NameSurname, Phone/Home, Phone/Work, Phone/PhoneMobile, Email/Home, Email/Work, PostalAddressLine1/Home, PostalAddressLine1/Home, PostalAddressLine2/Home, PostalAddressCity/Home, PostalAddressCode/Home, PostalAddressCountry/Home.
+
+contacts,import,export,csv,vcf
