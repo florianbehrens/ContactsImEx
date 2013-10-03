@@ -21,7 +21,7 @@ import bb.cascades 1.0
 
 Page {
     titleBar: TitleBar {
-        title: qsTr("Contacts ImEx")
+        title: qsTr("About ContactsImEx")
     }
     
     ScrollView {
@@ -32,14 +32,14 @@ Page {
 	        rightPadding: 20
 
 			ImageView {
-	            imageSource: "asset:///images/icon_big.png"
+                imageSource: "asset:///images/ContactsImEx_400x400.png"
 	            horizontalAlignment: HorizontalAlignment.Center
 	            scalingMethod: ScalingMethod.AspectFit
-	        }		
+	        }
 	    	Label {
 				multiline: true
 	            textFormat: TextFormat.Html
-				text: "<b>ContactsImEx Version 1.0.0</b><br/>" +
+				text: "<b>ContactsImEx Version 1.0.1</b><br/>" +
 				      "© 2013 by Florian Behrens."
 			}
 	        
@@ -48,7 +48,12 @@ Page {
 	        Label {
 	            multiline: true
 	            textFormat: TextFormat.Html
-                text: "This application utilizes the Tokenizer of the <a href=\"http://www.boost.org\">Boost C++ libraries</a> for CSV parsing. CSV files must be encoded in UTF-8 and adhere to the format specified by the <a href=\"http://www.boost.org/doc/libs/1_54_0/libs/tokenizer/escaped_list_separator.htm\">Escaped List Separator</a> using the default characters for separator (,), quote (\"), and escape (\\). The first line is considered a header record containing the field names."
+                text: "This application utilizes the Tokenizer of the <a href=\"http://www.boost.org\">Boost C++ libraries</a> " + 
+                      "for CSV parsing. CSV files must be encoded in UTF-8 and adhere to the format specified by the " +
+                      "<a href=\"http://www.boost.org/doc/libs/1_54_0/libs/tokenizer/escaped_list_separator.htm\">Escaped " + 
+                      "List Separator</a> using the default characters for separator (,), quote (\"), and escape (\\). " + 
+                      "The first line is considered a header record containing the field names. To find out about the " + 
+                      "required CSV header row values export a reference contact first."
             }
             Label {
                 multiline: true
