@@ -26,7 +26,8 @@ QVector<QString> ContactsBase::mAttributeSubKinds;
 QString ContactsBase::postalAddressAttributePrefix("PostalAddress");
 
 ContactsBase::ContactsBase()
-  : mMergePolicy(KeepExisting)
+  : mMergePolicy(KeepExisting),
+    mRunning(false)
 {
 	if (!mInitialized) {
 		mInitialized = true;
@@ -179,4 +180,10 @@ void ContactsBase::setMergePolicy(MergePolicy arg)
 		mMergePolicy = arg;
 		emit mergePolicyChanged(mMergePolicy);
 	}
+}
+
+void ContactsBase::setRunning(bool running)
+{
+	mRunning = running;
+	emit runningChanged(mRunning);
 }

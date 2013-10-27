@@ -125,6 +125,7 @@ Page {
 	            ContactsExporter {
 	                id: contactsExporter
 	                filetype: filetypeDropDown.selectedIndex
+                    onRunningChanged: Application.mainWindow.screenIdleMode = (running ? 1 /*ScreenIdleMode.KeepAwake*/ : 0 /*ScreenIdleMode.Normal*/)
 	            }
 	        ]
 	    }    

@@ -40,6 +40,7 @@ public:
 
 	Q_ENUMS(MergePolicy);
 	Q_PROPERTY(MergePolicy mergePolicy READ mergePolicy WRITE setMergePolicy NOTIFY mergePolicyChanged)
+	Q_PROPERTY(bool running READ running NOTIFY runningChanged)
 
 public:
 	ContactsBase();
@@ -47,10 +48,15 @@ public:
 	MergePolicy mergePolicy() const;
 	void setMergePolicy(MergePolicy arg);
 
+	bool running() const { return mRunning; }
+
 signals:
 	void mergePolicyChanged(MergePolicy arg);
+	void runningChanged(bool running);
 
 protected:
+	void setRunning(bool running);
+
 	static bb::pim::contacts::ContactService mContactService;
 	static bool mInitialized;
 	static QVector<QString> mAttributeKinds;
@@ -58,6 +64,9 @@ protected:
 	static QString postalAddressAttributePrefix;
 
 	MergePolicy mMergePolicy;
+
+private:
+	bool mRunning;
 };
 
 #endif /* CONTACTSBASE_H_ */

@@ -58,6 +58,9 @@ void ContactsImporter::importVcard(QFile &file)
 {
 	int invalid = 0, ignored = 0, overwritten = 0, merged = 0, added = 0;
 
+	// Set running flag to true
+	setRunning(true);
+
 	// Show progress bar
 	std::auto_ptr<SystemProgressDialog> systemProgressDialog(new SystemProgressDialog);
 	systemProgressDialog->setTitle(tr("Importing contacts..."));
@@ -126,6 +129,9 @@ void ContactsImporter::importVcard(QFile &file)
 			"%4 contact(s) added.\n"
 			"%5 contact(s) invalid.")).arg(ignored).arg(overwritten).arg(merged).arg(added).arg(invalid);
 	Utilities::showSystemToast(this, toast);
+
+	// Set running flag to true
+	setRunning(false);
 }
 
 void ContactsImporter::importCsv(QFile &file)
@@ -139,6 +145,9 @@ void ContactsImporter::importCsv(QFile &file)
 	// Read header CSV record
 	QByteArray byteArray = file.readLine().trimmed();
 	if (!byteArray.isEmpty()) {
+		// Set running flag to true
+		setRunning(true);
+
 		// Show progress bar
 		std::auto_ptr<SystemProgressDialog> systemProgressDialog(new SystemProgressDialog);
 		systemProgressDialog->setTitle(tr("Importing contacts..."));
@@ -274,6 +283,9 @@ void ContactsImporter::importCsv(QFile &file)
 
 		// Remove progress bar
 		systemProgressDialog->cancel();
+
+		// Set running flag to true
+		setRunning(false);
 	} else
 		Utilities::showSystemToast(this, "CSV file empty, nothing to import!");
 

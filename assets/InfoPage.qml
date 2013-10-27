@@ -39,7 +39,7 @@ Page {
 	    	Label {
 				multiline: true
 	            textFormat: TextFormat.Html
-				text: "<b>ContactsImEx Version 1.0.1</b><br/>" +
+				text: "<b>ContactsImEx Version 1.0.2</b><br/>" +
 				      "© 2013 by Florian Behrens."
 			}
 	        

@@ -70,9 +70,6 @@ signals:
 	void allChanged(bool all);
 	void contactsChanged(const QVariantList &contacts);
 
-private slots:
-	void onContactsSelected(const QList<int> &contactList);
-
 private:
 	Filetype mFiletype;
 	QString mFilename;
