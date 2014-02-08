@@ -39,8 +39,8 @@ Page {
 	    	Label {
 				multiline: true
 	            textFormat: TextFormat.Html
-				text: "<b>ContactsImEx Version 1.0.2</b><br/>" +
-				      "© 2013 by Florian Behrens."
+				text: "<b>ContactsImEx Version 1.1.0</b><br/>" +
+				      "© 2013-2014 by Florian Behrens."
 			}
 	        
 	        Divider {}

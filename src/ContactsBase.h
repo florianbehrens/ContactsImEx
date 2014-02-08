@@ -55,7 +55,22 @@ signals:
 	void runningChanged(bool running);
 
 protected:
-	void setRunning(bool running);
+	class RunStateActivator
+	{
+	public:
+		explicit RunStateActivator(ContactsBase *contactsBase);
+		~RunStateActivator();
+
+	private:
+		RunStateActivator(const RunStateActivator&);
+		RunStateActivator& operator=(const RunStateActivator&);
+
+		ContactsBase *mContactsBase;
+	};
+
+	friend class RunStateActivator;
+
+	RunStateActivator* setRunning();
 
 	static bb::pim::contacts::ContactService mContactService;
 	static bool mInitialized;

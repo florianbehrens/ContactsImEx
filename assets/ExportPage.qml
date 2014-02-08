@@ -42,17 +42,20 @@ Page {
 	        
 	        DropDown {
 	            id: filetypeDropDown
+
+                // Enums for import file type (readonly properties seem not to 
+                // be supported by Blackberry OS 10)
+                /*readonly*/ property int vcf: 0 
+                /*readonly*/ property int csv: 1
 	            
 	            horizontalAlignment: HorizontalAlignment.Fill
 	            selectedIndex: 0
 	            title: qsTr("File format") + Retranslate.onLocaleOrLanguageChanged
 	            
 	            Option {
-	                property string filenameExtension: "vcf" 
 	                text: qsTr("vCard stream") + " (.vcf)" + Retranslate.onLocaleOrLanguageChanged
 	            }
 	            Option { 
-	                property string filenameExtension: "csv" 
 	                text: qsTr("Comma seperated") + " (.csv)" + Retranslate.onLocaleOrLanguageChanged
 	            }
 	        }
@@ -106,15 +109,11 @@ Page {
 	                FilePicker {
 	                    id: filePicker
 	                    allowOverwrite: true
-	                    defaultSaveFileNames: {
-	                        return new Array("ContactsExport.".concat(filetypeDropDown.options[filetypeDropDown.selectedIndex].filenameExtension)); 
-	                    }
-	                    filter: { 
-	                        return new Array("*.".concat(filetypeDropDown.options[filetypeDropDown.selectedIndex].filenameExtension));
-	                    }
+                        defaultSaveFileNames: filetypeDropDown.selectedIndex == filetypeDropDown.vcf ? "ContactsExport.vcf" : "ContactsExport.csv"
+                        filter: filetypeDropDown.selectedIndex == filetypeDropDown.vcf ? "*.vcf" : "*.csv" 
 	                    mode: FilePickerMode.Saver
 	                    directories: [ "/accounts/1000/shared" ]
-	                    title: qsTr("Select contacts file") + Retranslate.onLocaleOrLanguageChanged
+	                    title: qsTr("Select file") + Retranslate.onLocaleOrLanguageChanged
 	
 	                    onFileSelected: contactsExporter.exportContacts(selectedFiles[0])
 	                }

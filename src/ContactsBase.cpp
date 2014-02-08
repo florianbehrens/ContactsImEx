@@ -182,8 +182,20 @@ void ContactsBase::setMergePolicy(MergePolicy arg)
 	}
 }
 
-void ContactsBase::setRunning(bool running)
+ContactsBase::RunStateActivator* ContactsBase::setRunning()
 {
-	mRunning = running;
-	emit runningChanged(mRunning);
+	return new RunStateActivator(this);
+}
+
+ContactsBase::RunStateActivator::RunStateActivator(ContactsBase *contactsBase)
+: mContactsBase(contactsBase)
+{
+	contactsBase->mRunning = true;
+	emit mContactsBase->runningChanged(mContactsBase->mRunning);
+}
+
+ContactsBase::RunStateActivator::~RunStateActivator()
+{
+	mContactsBase->mRunning = false;
+	emit mContactsBase->runningChanged(mContactsBase->mRunning);
 }

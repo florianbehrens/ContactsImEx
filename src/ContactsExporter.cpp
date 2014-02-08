@@ -100,6 +100,9 @@ void ContactsExporter::setContacts(const QVariantList &contacts)
 
 void ContactsExporter::exportContacts(const QString &filename)
 {
+	// Set running flag to true
+	std::unique_ptr<ContactsBase::RunStateActivator> runStateActivator(setRunning());
+
 	// Obtain list of contact ids to be exported
 	QList<ContactId> contactIds;
 	if (mContacts.length() == 0) {
@@ -125,9 +128,6 @@ void ContactsExporter::exportContacts(const QString &filename)
 	// Create vCard stream
 	QFile file(actualFilename);
 	if (file.open(QIODevice::WriteOnly)) {
-		// Set running flag to true
-		setRunning(true);
-
 		// Show progress bar
 		std::unique_ptr<SystemProgressDialog, std::delete_later<SystemProgressDialog> > systemProgressDialog(new SystemProgressDialog());
 		systemProgressDialog->setTitle(tr("Exporting contacts..."));
@@ -266,9 +266,6 @@ void ContactsExporter::exportContacts(const QString &filename)
 		} catch (operation_cancelled&) {}
 
 		systemProgressDialog->cancel();
-
-		// Set running flag to true
-		setRunning(false);
 	} else
 		Utilities::showSystemToast(this, QString(tr("Could not write contact(s) to file %1.")).arg(actualFilename));
 }

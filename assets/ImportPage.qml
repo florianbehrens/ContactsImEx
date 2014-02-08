@@ -23,7 +23,7 @@ import CustomComponents 1.0
 
 Page {
     titleBar: TitleBar {
-        title: qsTr("Import contacts from file") + Retranslate.onLocaleOrLanguageChanged
+        title: qsTr("Import contacts from file(s)") + Retranslate.onLocaleOrLanguageChanged
     }
     
     // The ScrollView helps for smaller screens, or when DropDown controls are 
@@ -34,10 +34,30 @@ Page {
 	        bottomPadding: 30
             leftPadding: 20
             rightPadding: 20
-	        
-	        Label {
-	            multiline: true
-	            text: qsTr("Import contacts from vCards stream (version 3.0) or comma separated values file on device or media card.") + Retranslate.onLocaleOrLanguageChanged
+
+            Label {
+                multiline: true
+                text: qsTr("Choose between one or more vCards stream (version 3.0) files or a single comma separated values file.") + Retranslate.onLocaleOrLanguageChanged
+            }
+
+            DropDown {
+                id: filetypeDropDown
+
+                // Enums for import file type (readonly properties seem not to
+                // be supported by Blackberry OS 10)
+                /*readonly*/ property int vcf: 0
+                /*readonly*/ property int csv: 1
+
+                horizontalAlignment: HorizontalAlignment.Fill
+                selectedIndex: 0
+                title: qsTr("File format") + Retranslate.onLocaleOrLanguageChanged
+
+                Option {
+                    text: qsTr("vCard stream") + " (.vcf)" + Retranslate.onLocaleOrLanguageChanged
+                }
+                Option {
+                    text: qsTr("Comma seperated") + " (.csv)" + Retranslate.onLocaleOrLanguageChanged
+                }
             }
 	
 	        Divider {}
@@ -63,26 +83,26 @@ Page {
 	        
 	        Label {
 	            multiline: true
-	            text: qsTr("After pressing the Import button you can select the file to import your contacts from.") + Retranslate.onLocaleOrLanguageChanged
+	            text: qsTr("After pressing the Import button you can select the file(s) to import your contacts from.") + Retranslate.onLocaleOrLanguageChanged
 	        }
 	        
 	        Button {
 	            horizontalAlignment: HorizontalAlignment.Fill
 	            text: qsTr("Import")
 	            onClicked: filePicker.open()
-	
+
 	            attachedObjects: [
 	                FilePicker {
 	                    id: filePicker
-	                    filter: [ "*.vcf", "*.csv" ]
-	                    mode: FilePickerMode.Picker
-	                    title: qsTr("Select contacts file") + Retranslate.onLocaleOrLanguageChanged
+	                    filter: filetypeDropDown.selectedIndex == filetypeDropDown.vcf ? [ "*.vcf" ] : [ "*.csv" ]
+	                    mode: filetypeDropDown.selectedIndex == filetypeDropDown.vcf ? FilePickerMode.PickerMultiple : FilePickerMode.Picker
+	                    title: qsTr("Select file(s)") + Retranslate.onLocaleOrLanguageChanged
 	                    directories: [ "/accounts/1000/shared" ]
-	                    onFileSelected: contactsImporter.process(selectedFiles[0]);
+	                    onFileSelected: filetypeDropDown.selectedIndex == filetypeDropDown.vcf ? contactsImporter.importVcard(selectedFiles) : contactsImporter.importCsv(selectedFiles[0])
 	                }
 	            ]
 	        }
-	
+
 	        attachedObjects: [
 		        ContactsImporter {
 		            id: contactsImporter

@@ -44,13 +44,10 @@ class ContactsImporter : public ContactsBase
 public:
 	static void qmlRegisterType();
 
-	/// Starts the contacts import procedure.
-	Q_INVOKABLE void process(const QString &filename);
+	Q_INVOKABLE void importVcard(const QStringList &filenames);
+	Q_INVOKABLE void importCsv(const QString &filename);
 
 private:
-	void importVcard(QFile &file);
-	void importCsv(QFile &file);
-
 	enum ImportResult {
 		Invalid,
 		Ignored,
