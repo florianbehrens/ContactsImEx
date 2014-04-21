@@ -268,5 +268,5 @@ void ContactsExporter::exportContacts(const QString &filename)
 
 		systemProgressDialog->cancel();
 	} else
-		Utilities::showSystemToast(this, QString(tr("Could not write contact(s) to file %1.")).arg(actualFilename));
+		Utilities::showSystemToast(this, QString(tr("Access to file %1 not allowed.")).arg(actualFilename));
 }
