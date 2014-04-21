@@ -32,3 +32,4 @@ CSV-Tests:
 Export-Tests:
 
 - Export all contacts to CSV
+- Export complete contact (e.g., with postal address) as vcf and check if complete

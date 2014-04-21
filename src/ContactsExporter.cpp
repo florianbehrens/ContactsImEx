@@ -19,6 +19,8 @@
 
 #include "ContactsExporter.h"
 
+#include <limits>
+
 #include <QByteArray>
 #include <QDebug>
 #include <QDir>
@@ -125,7 +127,6 @@ void ContactsExporter::exportContacts(const QString &filename)
 	if (!actualFilename.endsWith(fileExtensionsMap[int(mFiletype)]))
 		actualFilename += fileExtensionsMap[int(mFiletype)];
 
-	// Create vCard stream
 	QFile file(actualFilename);
 	if (file.open(QIODevice::WriteOnly)) {
 		// Show progress bar
@@ -140,13 +141,13 @@ void ContactsExporter::exportContacts(const QString &filename)
 
 		try {
 			if (mFiletype == vCard) {
-				// TODO: Since the ContactService API seems to only support a maximum of 20
-				// contact ids within the list, we need to iterate over the list.
-				QList<ContactId> contactIdsSubset;
-				for (int pos = 0; pos < contactIds.size(); ) {
-					QList<ContactId> contactIdSubset = contactIds.mid(pos, 20);
-					file.write(mContactService.exportContactVCards(contactIdSubset, VCardPhotoEncoding::BASE64));
-					pos += contactIdSubset.size();
+				// We cannot use ContactService::exportContactVCards API since
+				// we need full contact details, which is only guaranteed using
+				// ContactService::contactDetails API.
+				QList<ContactId>::const_iterator it = contactIds.constBegin();
+				for (int index = 0; it != contactIds.constEnd(); ++it, ++index) {
+					const Contact contact = mContactService.contactDetails(*it);
+					file.write(mContactService.contactToVCard(*it, VCardPhotoEncoding::BASE64, std::numeric_limits<int>::max()));
 
 					// Check whether operation was cancelled by user
 					Application::instance()->processEvents();
@@ -154,8 +155,8 @@ void ContactsExporter::exportContacts(const QString &filename)
 						throw operation_cancelled();
 
 					// Update progress bar
-					systemProgressDialog->setProgress(pos * 100 / contactIds.size());
-					systemProgressDialog->setStatusDetails(QString(tr("%1 contact(s) exported")).arg(pos));
+					systemProgressDialog->setProgress(index * 100 / contactIds.size());
+					systemProgressDialog->setStatusDetails(QString(tr("%1 contact(s) exported")).arg(index));
 					systemProgressDialog->show();
 				}
 			} else if (mFiletype == CSV) {
