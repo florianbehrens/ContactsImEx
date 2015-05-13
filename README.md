@@ -7,6 +7,10 @@ A contacts import/export app for the Blackberry 10 mobile platform.
 
 ## Release Notes
 
+### Version 1.1.2
+
+- Fixed CSV header field bug. 
+
 ### Version 1.1.1
 
 - Fixed incomplete vcf export bug.

@@ -1,5 +1,5 @@
 /*
- * (c) Copyright Florian Behrens 2013.
+ * (c) Copyright Florian Behrens 2013-2015.
  *
  * This file is part of ContactsImEx.
  *
@@ -31,7 +31,7 @@ ContactsBase::ContactsBase()
 {
 	if (!mInitialized) {
 		mInitialized = true;
-		mAttributeKinds.reserve(27);
+		mAttributeKinds.reserve(28);
 		mAttributeKinds <<
 			"Invalid" <<
 			"Phone" <<
@@ -59,8 +59,9 @@ ContactsBase::ContactsBase()
 			"Sound" <<
 			"Notification" <<
 			"MessageSound" <<
-			"MessageNotification";
-		mAttributeSubKinds.reserve(98);
+			"MessageNotification" <<
+			"SecureVoice";
+		mAttributeSubKinds.reserve(119);
 		mAttributeSubKinds <<
 			"Invalid" <<
 			"Other" <<
@@ -105,13 +106,10 @@ ContactsBase::ContactsBase()
 			"RankingTrstRank" <<
 			"OrganizationAffiliationName" <<
 			"OrganizationAffiliationPhoneticName" <<
-			"OrganizationAffiliationTitle" <<
 			"StartDate" <<
 			"EndDate" <<
 			"OrganizationAffiliationDetails" <<
 			"EducationInstitutionName" <<
-			"EducationStartDate" <<
-			"EducationEndDate" <<
 			"EducationDegree" <<
 			"EducationConcentration" <<
 			"EducationActivities" <<
@@ -165,7 +163,26 @@ ContactsBase::ContactsBase()
 			"BBMNotificationLED" <<
 			"BBMNotificationInstantPreview" <<
 			"HiddenJoynNumbers" <<
-			"HiddenJoynInfo";
+			"HiddenJoynInfo"  <<
+			"BBMNotificationInstantPreview" <<
+			"PhoneNotificationAllAlert" <<
+			"MessageNotificationAllAlert" <<
+			"MessageNotificationInstantPreview" <<
+			"BBMNotificationAllAlert" <<
+			"TextMessageNotificationAllAlert" <<
+			"TextMessageNotificationInstantPreview" <<
+			"TextMessageNotificationRingtone" <<
+			"TextMessageNotificationVibration" <<
+			"TextMessageNotificationLED" <<
+			"OtherMessageNotificationAllAlert" <<
+			"OtherMessageNotificationInstantPreview" <<
+			"OtherMessageNotificationRingtone" <<
+			"OtherMessageNotificationVibration" <<
+			"OtherMessageNotificationLED" <<
+			"SecureVoiceId" <<
+			"HiddenInstantMessagingBbmId" <<
+			"HiddenVoLTEVideo" <<
+			"HiddenVoLTEVoice";
 	}
 }
 
